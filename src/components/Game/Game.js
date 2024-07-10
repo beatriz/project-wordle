@@ -7,6 +7,7 @@ import GuessResults from "../GuessResults/GuessResults";
 import { checkGuess } from "../../game-helpers";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import ResultBanner from "../ResultBanner/ResultBanner";
+import Keyboard from "../Keyboard/Keyboard";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -40,6 +41,7 @@ function Game() {
         handleNewGuess={addGuess}
         isEnabled={gameResult === undefined}
       />
+      <Keyboard guesses={guessList} />
       {gameResult && (
         <ResultBanner
           result={gameResult}
