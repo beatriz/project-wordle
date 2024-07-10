@@ -9,14 +9,12 @@ import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import ResultBanner from "../ResultBanner/ResultBanner";
 import Keyboard from "../Keyboard/Keyboard";
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
   const [guessList, setGuessList] = React.useState([]);
   const [gameResult, setGameResult] = React.useState();
+  const [answer, setAnswer] = React.useState(() => sample(WORDS));
+
+  console.log({ answer });
 
   const checkResult = (guessValue, numGuesses) => {
     if (guessValue === answer) {
@@ -34,6 +32,13 @@ function Game() {
     checkResult(guessValue, nextGuessList.length);
   };
 
+  const restartGame = () => {
+    setGuessList([]);
+    setGameResult(undefined);
+    const nextAnswer = sample(WORDS);
+    setAnswer(nextAnswer);
+  };
+
   return (
     <>
       <GuessResults guesses={guessList} />
@@ -47,6 +52,7 @@ function Game() {
           result={gameResult}
           numGuesses={guessList.length}
           answer={answer}
+          onRestart={restartGame}
         />
       )}
     </>
